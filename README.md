@@ -6,6 +6,9 @@ To execute Push notification, use Push Button and copy Subscription JSON from co
 
 App uses https://animechan.vercel.app/ for fetching quotes.
 
+## Demo 
+https://pwa-project-anime-quotes.herokuapp.com/ 
+
 ## Homework Checklist
 
 - [x] App should work offline, App caches necessary files to run app offline, user can view favorite quotes offline, also offline feed is cached
