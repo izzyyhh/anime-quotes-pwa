@@ -20,6 +20,9 @@
   overflow-y: scroll;
 }
 
+#pushButton {
+}
+
 .App-quote {
   position: relative;
   background-color: #2e092d;

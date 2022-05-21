@@ -4,15 +4,15 @@
 const CACHE_VERSION = 1;
 const CACHE_NAME = `ANIME_QUOTES_${CACHE_VERSION}`;
 const TO_CACHE = [
-  "icon_512.png",
-  "icon_256.png",
-  "icon_64.png",
-  "offline.html",
-  "static/js/bundle.js",
-  "script.js",
-  "manifest.json",
-  "static/media/icon_256.c15defb8e0a1f2f2e977.png",
-  "index.html",
+  "/icon_512.png",
+  "/icon_256.png",
+  "/icon_64.png",
+  "/static/js/bundle.js",
+  "/script.js",
+  "/manifest.json",
+  "/offline.html",
+  "/static/media/icon_256.c15defb8e0a1f2f2e977.png",
+  "/index.html",
   "/",
 ];
 
@@ -53,7 +53,7 @@ self.addEventListener("fetch", function (event) {
         console.log("[Service Worker] Fetch failed;", error);
 
         const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(event.request.url);
+        const cachedResponse = await cache.match(event.request);
         console.log(cachedResponse);
         console.log("returning from cache if existent", event.request.url);
 
@@ -61,4 +61,38 @@ self.addEventListener("fetch", function (event) {
       }
     })()
   );
+});
+
+self.addEventListener("message", function (event) {
+  self.clients.matchAll().then((all) =>
+    all.forEach((client) => {
+      client.postMessage(event.data);
+    })
+  );
+});
+
+/* eslint-disable no-restricted-globals */
+self.addEventListener("push", function (event) {
+  console.log("[Service Worker] Push Received.");
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+
+  const title = "Quote of the Day";
+  const options = {
+    body: event.data.text(),
+    icon: "images/icon.png",
+    badge: "images/badge.png",
+  };
+
+  console.log(event.data);
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", function (event) {
+  console.log("[Service Worker] Notification click Received.");
+
+  event.notification.close();
+
+  // eslint-disable-next-line no-undef
+  event.waitUntil(clients.openWindow("https://developers.google.com/web/"));
 });
