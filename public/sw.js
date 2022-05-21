@@ -52,12 +52,24 @@ self.addEventListener("fetch", function (event) {
       } catch (error) {
         console.log("[Service Worker] Fetch failed;", error);
 
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(event.request);
-        console.log(cachedResponse);
-        console.log("returning from cache if existent", event.request.url);
+        if (event.request.url === "https://animechan.vercel.app/api/quotes") {
+          console.log("serving fall back offline feed");
+          const offlineFeed = [
+            {
+              anime: "Al Bert and O",
+              character: "Albert",
+              quote: "Offline World!",
+            },
+          ];
+          return new Response(JSON.stringify(offlineFeed));
+        } else {
+          const cache = await caches.open(CACHE_NAME);
+          const cachedResponse = await cache.match(event.request);
+          console.log(cachedResponse);
+          console.log("returning from cache if existent", event.request.url);
 
-        return cachedResponse;
+          return cachedResponse;
+        }
       }
     })()
   );

@@ -7,18 +7,9 @@ import { useEffect, useState } from "react";
 
 var deferredPrompt;
 
-const handlePush = () => {
-  const button = document.getElementById("#pushButton");
-  console.log(button);
-};
-
 window.addEventListener("beforeinstallprompt", function (e) {
-  console.log("beforeinstallprompt Event fired");
   e.preventDefault();
-
-  // Stash the event so it can be triggered later.
   deferredPrompt = e;
-
   return false;
 });
 
@@ -60,11 +51,13 @@ const sendThemeMessage = () => {
 function App() {
   const [favQuotes, setFavQuotes] = useState([]);
   useEffect(() => {
-    fetch("/favs.json").then((favs) => {
-      console.log("fetching favs");
-      console.log(favs);
-    });
+    let favs = JSON.parse(window.localStorage.getItem("favs"));
+    if (favs === null) {
+      favs = [];
+    }
+    setFavQuotes(favs);
   }, []);
+
   return (
     <div className="wrapper">
       <div className="App" id="appBody">
@@ -72,9 +65,6 @@ function App() {
         <button onClick={triggerInstall}>Install with prompt</button>
         <button onClick={sendThemeMessage}>
           Change Theme across Windows/Tabs
-        </button>
-        <button onClick={handlePush}>
-          Enable Push Notifications with prompt
         </button>
         <BrowserRouter>
           <Routes>

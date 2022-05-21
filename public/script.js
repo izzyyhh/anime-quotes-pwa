@@ -13,39 +13,16 @@ addEventListener("DOMContentLoaded", () => {
     });
 
     navigator.serviceWorker.addEventListener("message", (event) => {
-      console.log("hii");
-      console.log(event.data);
       const appBody = this.document.getElementById("appBody");
       appBody.style.backgroundColor = event.data.color;
     });
   }
 
-  /*
-   *
-   *  Push Notifications codelab
-   *  Copyright 2015 Google Inc. All rights reserved.
-   *
-   *  Licensed under the Apache License, Version 2.0 (the "License");
-   *  you may not use this file except in compliance with the License.
-   *  You may obtain a copy of the License at
-   *
-   *      https://www.apache.org/licenses/LICENSE-2.0
-   *
-   *  Unless required by applicable law or agreed to in writing, software
-   *  distributed under the License is distributed on an "AS IS" BASIS,
-   *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   *  See the License for the specific language governing permissions and
-   *  limitations under the License
-   *
-   */
-
-  /* eslint-env browser, es6 */
-
+  // push notification
   const applicationServerPublicKey =
     "BI7pdFiNIW_5EWL4ugyL73UucEaO4Pmos4oIaSwwh9rWOoPypg6VBJeWrmJNgXMz-FIz--m6CCZHOdjIJGSozyk";
 
   const pushButton = document.querySelector("#pushButton");
-  console.log(pushButton);
 
   let swRegistration = null;
   let isSubscribed = false;
@@ -66,13 +43,9 @@ addEventListener("DOMContentLoaded", () => {
   }
 
   if ("serviceWorker" in navigator && "PushManager" in window) {
-    console.log("Service Worker and Push is supported");
-
     navigator.serviceWorker
       .register("sw.js")
       .then(function (swReg) {
-        console.log("Push Service Worker is registered", swReg);
-
         swRegistration = swReg;
         initializeUI();
       })
@@ -110,15 +83,15 @@ addEventListener("DOMContentLoaded", () => {
 
   function updateBtn() {
     if (Notification.permission === "denied") {
-      pushButton.textContent = "Push Messaging Blocked.";
+      pushButton.textContent = "Push Notifications Blocked.";
       pushButton.disabled = true;
       return;
     }
 
     if (isSubscribed) {
-      pushButton.textContent = "Disable Push Messaging";
+      pushButton.textContent = "Disable Push Notifications";
     } else {
-      pushButton.textContent = "Enable Push Messaging";
+      pushButton.textContent = "Enable Push Notifications";
     }
 
     pushButton.disabled = false;
@@ -134,7 +107,7 @@ addEventListener("DOMContentLoaded", () => {
       .then(function (subscription) {
         console.log("User is subscribed.");
 
-        console.log(JSON.stringify(subscription));
+        console.dir(JSON.stringify(subscription));
 
         isSubscribed = true;
 

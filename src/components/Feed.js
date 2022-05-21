@@ -1,24 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import QuoteItem from "./QuoteItem";
 
 function Feed({ favQuotes, setFavQuotes }) {
+  let [feedQuotes, setFeedQuotes] = useState([
+    {
+      anime: "Progressive Web App",
+      quote: "Patience is the key!",
+      character: "izzy",
+    },
+  ]);
+
   useEffect(() => {
-    // fetch("https://animechan.vercel.app/api/quotes")
-    //   .then((response) => response.json())
-    //   .then((quotes) => console.log(quotes));
+    fetch("https://animechan.vercel.app/api/quotes")
+      .then((response) => response.json())
+      .then((quotes) => {
+        setFeedQuotes([...feedQuotes, ...quotes]);
+      });
   }, []);
 
   return (
     <section className="App-home">
+      <h2 style={{ textAlign: "center" }}>Quotes Feed</h2>
       <div className="App-feed">
-        <h2>Quotes Feed</h2>
-        <QuoteItem
-          anime={"Toaru Majutsu no Index"}
-          character={"Haruki Aritomi"}
-          quote={
-            "The Idealist says, everyone is born equal. We are all of equal worth. The sportsman screams, no effort goes unrewarded. Work hard for your dreams! It's about how you play the game. Obviously all untrue."
-          }
-        ></QuoteItem>
+        {feedQuotes.map((q) => (
+          <QuoteItem
+            key={Date.now() + Math.random(0, 10000).toString()}
+            anime={q.anime}
+            character={q.character}
+            quote={q.quote}
+            setFavQuotes={setFavQuotes}
+          />
+        ))}
       </div>
     </section>
   );
