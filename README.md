@@ -2,14 +2,17 @@
 
 This app has 2 Feeds. 1 Feed shows random quotes from popular anime. Quote can be liked/remembered and will be stored in the 2nd feed called "Favorite"-feed. Quotes can be shared and stored.
 
-To execute Push notification, use Push Button and copy Subscription JSON from console. Use that JSON in https://web-push-codelab.glitch.me/.
+Push Notification for quote of the day. To execute Push notification, use Push Button and copy Subscription JSON from console. Use that JSON in https://web-push-codelab.glitch.me/.
 
-App uses https://animechan.vercel.app/ for fetching quotes.
+App can change theme across tabs/windows.
+
+App uses https://animechan.vercel.app/ for fetching quotes. Request limited to 100 per hour.
 
 ## Homework Checklist
 
 - [x] App should work offline, App caches necessary files to run app offline, user can view favorite quotes offline, also offline feed is cached
 - [x] Cache: Demonstrate at least one cache strategy, App creates caches and can migrate, App caches offline-feed and files, images, ...
+- [x] Messaging: Demonstrate communication between SW and windows/tabs, App can change theme across tabs/windows
 - [x] Installation: Deffer Installation Prompt, initiate with button
 - [x] Push: Request permission with button and with own UI before native one. At least show in console a message when push is received
 - [x] Add as much other APIs as you want: Web-Share-API, Web-Storage-API, ...
