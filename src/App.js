@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import Feed from "./components/Feed";
+import Header from "./components/Header";
+import Favorite from "./components/Favorite";
+import { useState } from "react";
 
 function App() {
+  const [favQuotes, setFavQuotes] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <div className="App">
+        <Header></Header>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Feed favQuotes={favQuotes} setFavQuotes={setFavQuotes} />
+              }
+            ></Route>
+            <Route
+              path="fav"
+              element={
+                <Favorite favQuotes={favQuotes} setFavQuotes={setFavQuotes} />
+              }
+            ></Route>
+          </Routes>
+          <div className="App-links">
+            <Link to="/">Feed</Link>
+            <Link to="/fav">Favorites</Link>
+          </div>
+        </BrowserRouter>
+      </div>
     </div>
   );
 }
