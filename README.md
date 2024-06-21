@@ -11,7 +11,7 @@ App uses https://animechan.vercel.app/ for fetching quotes. Request limited to 1
 ## Demo 
 https://pwa-project-anime-quotes.herokuapp.com/ 
 
-## Homework Checklist
+## Checklist
 
 - [x] App should work offline, App caches necessary files to run app offline, user can view favorite quotes offline, also offline feed is cached
 - [x] Cache: Demonstrate at least one cache strategy, App creates caches and can migrate, App caches offline-feed and files, images, ...
